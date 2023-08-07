@@ -40,12 +40,12 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/fiorix/go-diameter/v4/diam"
-	"github.com/fiorix/go-diameter/v4/diam/avp"
-	"github.com/fiorix/go-diameter/v4/diam/datatype"
-	"github.com/fiorix/go-diameter/v4/diam/dict"
-	"github.com/fiorix/go-diameter/v4/diam/sm"
-	"github.com/fiorix/go-diameter/v4/diam/sm/smpeer"
+	"github.com/marcosgmgm/go-diameter/v4/diam"
+	"github.com/marcosgmgm/go-diameter/v4/diam/avp"
+	"github.com/marcosgmgm/go-diameter/v4/diam/datatype"
+	"github.com/marcosgmgm/go-diameter/v4/diam/dict"
+	"github.com/marcosgmgm/go-diameter/v4/diam/sm"
+	"github.com/marcosgmgm/go-diameter/v4/diam/sm/smpeer"
 )
 
 func init() {
@@ -53,10 +53,10 @@ func init() {
 }
 
 var (
-	addr            = flag.String("addr", "192.168.60.145:3868", "address in form of ip:port to connect to")
-	host            = flag.String("diam_host", "magma-oai.openair4G.eur", "diameter identity host")
-	realm           = flag.String("diam_realm", "openair4G.eur", "diameter identity realm")
-	networkType     = flag.String("network_type", "sctp", "protocol type tcp/sctp/tcp4/tcp6/sctp4/sctp6")
+	addr            = flag.String("addr", "localhost:3868", "address in form of ip:port to connect to")
+	host            = flag.String("diam_host", "client", "diameter identity host")
+	realm           = flag.String("diam_realm", "go-diameter", "diameter identity realm")
+	networkType     = flag.String("network_type", "tcp", "protocol type tcp/sctp/tcp4/tcp6/sctp4/sctp6")
 	retries         = flag.Uint("retries", 3, "Maximum number of retransmits")
 	watchdog        = flag.Uint("watchdog", 5, "Diameter watchdog interval in seconds. 0 to disable watchdog.")
 	vendorID        = flag.Uint("vendor", 10415, "Vendor ID")
