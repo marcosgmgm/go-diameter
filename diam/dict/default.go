@@ -7640,16 +7640,6 @@ var tgppslhXML = `<?xml version="1.0" encoding="UTF-8"?>
 			<data type="DiameterIdentity"/>
 		</avp>
 
-		<avp name="Experimental-Result" code="297" must="M" may="P" must-not="V" may-encrypt="N" vendor-id="10415">
-			<data type="Grouped">
-				<rule avp="Experimental-Result-Code" required="true" max="1"/>
-			</data>
-		</avp>
-
-		<avp name="Experimental-Result-Code" code="298" must="M" may="P" must-not="V" may-encrypt="N" vendor-id="10415">
-			<data type="Unsigned32"/>
-		</avp>
-
 		<avp name="LCS-Capabilities-Sets" code="2404" must="M,V" may-encrypt="N" vendor-id="10415">
 			<data type="Unsigned32"/>
 		</avp>

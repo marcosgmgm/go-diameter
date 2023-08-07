@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Diameter Slh client example.
+// Diameter Slg client example.
 package main
 
 import (
@@ -34,7 +34,7 @@ var (
 	retries     = flag.Uint("retries", 3, "Maximum number of retransmits")
 	watchdog    = flag.Uint("watchdog", 5, "Diameter watchdog interval in seconds. 0 to disable watchdog.")
 	vendorID    = flag.Uint("vendor", 10415, "Vendor ID")
-	appID       = flag.Uint("app", 16777291, "AuthApplicationID")
+	appID       = flag.Uint("app", 16777255, "AuthApplicationID")
 )
 
 func main() {
@@ -48,7 +48,7 @@ func main() {
 		OriginHost:       datatype.DiameterIdentity(*host),
 		OriginRealm:      datatype.DiameterIdentity(*realm),
 		VendorID:         datatype.Unsigned32(*vendorID),
-		ProductName:      "go-diameter-slh",
+		ProductName:      "go-diameter-slg",
 		OriginStateID:    datatype.Unsigned32(time.Now().Unix()),
 		FirmwareRevision: 1,
 		HostIPAddresses: []datatype.Address{
@@ -81,7 +81,8 @@ func main() {
 
 	// Set message handlers.
 	done := make(chan struct{}, 1000)
-	mux.Handle("RIA", handleRIA(done))
+	mux.Handle("PLA", handlePLA(done))
+	mux.Handle("LRA", handleLRA(done))
 
 	// Catch All
 	mux.HandleIdx(diam.ALL_CMD_INDEX, handleAll())
@@ -93,18 +94,28 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = sendRIR(conn, cfg)
+	err = sendPLR(conn, cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
 	select {
 	case <-done:
 	case <-time.After(10 * time.Second):
-		log.Fatal("LCS-Routing-Info-Request timeout")
+		log.Fatal("Provide-Location-Request timeout")
+	}
+
+	err = sendLRR(conn, cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
+	select {
+	case <-done:
+	case <-time.After(10 * time.Second):
+		log.Fatal("Location-Report-Request")
 	}
 }
 
-func sendRIR(c diam.Conn, cfg *sm.Settings) error {
+func sendPLR(c diam.Conn, cfg *sm.Settings) error {
 	// Get this client's metadata from the connection object,
 	// which is set by the state machine after the handshake.
 	// It contains the peer's Origin-Host and Realm from the
@@ -114,7 +125,7 @@ func sendRIR(c diam.Conn, cfg *sm.Settings) error {
 		return errors.New("peer metadata unavailable")
 	}
 	sid := "session;" + (uuid.New()).String()
-	m := diam.NewRequest(8388622, uint32(*appID), c.Dictionary()) // SLR ID
+	m := diam.NewRequest(8388620, uint32(*appID), c.Dictionary()) // PLR ID
 	m.NewAVP(avp.SessionID, avp.Mbit, 0, datatype.UTF8String(sid))
 	m.NewAVP(avp.OriginHost, avp.Mbit, 0, cfg.OriginHost)
 	m.NewAVP(avp.OriginRealm, avp.Mbit, 0, cfg.OriginRealm)
@@ -126,19 +137,83 @@ func sendRIR(c diam.Conn, cfg *sm.Settings) error {
 			diam.NewAVP(avp.VendorID, avp.Mbit, 0, datatype.Unsigned32(*vendorID)),
 		},
 	})
+	m.NewAVP(avp.SLgLocationType, avp.Mbit, 10415, datatype.Enumerated(0))
 	m.NewAVP(avp.UserName, avp.Mbit, 0, datatype.UTF8String("client-username"))
 	m.NewAVP(avp.MSISDN, avp.Mbit, 10415, datatype.OctetString("5534998836856"))
-	m.NewAVP(avp.GMLCNumber, avp.Mbit, 10415, datatype.OctetString("5503400012345"))
+	m.NewAVP(avp.LCSEPSClientName, avp.Mbit, 10415, &diam.GroupedAVP{
+		AVP: []*diam.AVP{
+			diam.NewAVP(avp.LCSNameString, avp.Mbit, 10415, datatype.UTF8String("lca-client-name")),
+			diam.NewAVP(avp.LCSFormatIndicator, avp.Mbit, 10415, datatype.Enumerated(0)),
+		},
+	})
+	m.NewAVP(avp.LCSClientType, avp.Mbit, 10415, datatype.Enumerated(0))
+	m.NewAVP(avp.LCSRequestorName, avp.Mbit, 10415, &diam.GroupedAVP{
+		AVP: []*diam.AVP{
+			diam.NewAVP(avp.LCSRequestorIDString, avp.Mbit, 10415, datatype.UTF8String("lca-id-01")),
+			diam.NewAVP(avp.LCSFormatIndicator, avp.Mbit, 10415, datatype.Enumerated(0)),
+		},
+	})
+	m.NewAVP(avp.LCSPriority, avp.Mbit, 10415, datatype.Unsigned32(0))
 
-	log.Printf("Sending RIR to %s\n%s", c.RemoteAddr(), m)
+	log.Printf("Sending PLR to %s\n%s", c.RemoteAddr(), m)
 	_, err := m.WriteTo(c)
 	return err
 }
 
-func handleRIA(done chan struct{}) diam.HandlerFunc {
+func sendLRR(c diam.Conn, cfg *sm.Settings) error {
+	// Get this client's metadata from the connection object,
+	// which is set by the state machine after the handshake.
+	// It contains the peer's Origin-Host and Realm from the
+	// CER/CEA handshake. We use it to populate the AVPs below.
+	meta, ok := smpeer.FromContext(c.Context())
+	if !ok {
+		return errors.New("peer metadata unavailable")
+	}
+	sid := "session;" + (uuid.New()).String()
+	m := diam.NewRequest(8388621, uint32(*appID), c.Dictionary()) // PLR ID
+	m.NewAVP(avp.SessionID, avp.Mbit, 0, datatype.UTF8String(sid))
+	m.NewAVP(avp.OriginHost, avp.Mbit, 0, cfg.OriginHost)
+	m.NewAVP(avp.OriginRealm, avp.Mbit, 0, cfg.OriginRealm)
+	m.NewAVP(avp.DestinationRealm, avp.Mbit, 0, meta.OriginRealm)
+	m.NewAVP(avp.DestinationHost, avp.Mbit, 0, meta.OriginHost)
+	m.NewAVP(avp.AuthSessionState, avp.Mbit, 0, datatype.Enumerated(0))
+
+	m.NewAVP(avp.LocationEvent, avp.Mbit, 10415, datatype.Enumerated(0))
+	m.NewAVP(avp.UserName, avp.Mbit, 0, datatype.UTF8String("client-username"))
+	m.NewAVP(avp.MSISDN, avp.Mbit, 10415, datatype.OctetString("5534998836856"))
+	m.NewAVP(avp.IMEI, avp.Mbit, 10415, datatype.UTF8String("356133312135709"))
+	m.NewAVP(avp.LocationEstimate, avp.Mbit, 10415, datatype.OctetString("0.1231,0.1234"))
+	m.NewAVP(avp.AgeOfLocationEstimate, avp.Mbit, 10415, datatype.Unsigned32(0))
+	m.NewAVP(avp.ECGI, avp.Mbit, 10415, datatype.OctetString("ecgi-name"))
+	m.NewAVP(avp.ServingNode, avp.Mbit, 10415, &diam.GroupedAVP{
+		AVP: []*diam.AVP{
+			diam.NewAVP(avp.SGSNNumber, avp.Mbit, 10415, datatype.UTF8String("5503490000002")),
+			diam.NewAVP(avp.MMEName, avp.Mbit, 10415, datatype.DiameterIdentity("mme.org.br")),
+			diam.NewAVP(avp.MMERealm, avp.Mbit, 10415, datatype.DiameterIdentity("realm.mme.org.br")),
+			diam.NewAVP(avp.SGSNName, avp.Mbit, 10415, datatype.DiameterIdentity("sgsn.org.br")),
+			diam.NewAVP(avp.SGSNRealm, avp.Mbit, 10415, datatype.DiameterIdentity("realm.sgsn.org.br")),
+			diam.NewAVP(avp.MSCNumber, avp.Mbit, 10415, datatype.DiameterIdentity("55034000012345")),
+			diam.NewAVP(avp.LCSCapabilitiesSets, avp.Mbit, 10415, datatype.Unsigned32(0)),
+		},
+	})
+
+	log.Printf("Sending LRR to %s\n%s", c.RemoteAddr(), m)
+	_, err := m.WriteTo(c)
+	return err
+}
+
+func handlePLA(done chan struct{}) diam.HandlerFunc {
 	ok := struct{}{}
 	return func(c diam.Conn, m *diam.Message) {
-		log.Printf("Received RIA to %s\n%s", c.RemoteAddr(), m)
+		log.Printf("Received PLA to %s\n%s", c.RemoteAddr(), m)
+		done <- ok
+	}
+}
+
+func handleLRA(done chan struct{}) diam.HandlerFunc {
+	ok := struct{}{}
+	return func(c diam.Conn, m *diam.Message) {
+		log.Printf("Received PRA to %s\n%s", c.RemoteAddr(), m)
 		done <- ok
 	}
 }

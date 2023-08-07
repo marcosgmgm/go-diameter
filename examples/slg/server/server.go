@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Diameter server slh example.
+// Diameter server slg example.
 //
 // If you'd like to test diameter over SSL, generate SSL certificates:
 //   go run $GOROOT/src/crypto/tls/generate_cert.go --host localhost
@@ -18,7 +18,6 @@ package main
 import (
 	"flag"
 	"log"
-	"net"
 	"net/http"
 
 	_ "net/http/pprof"
@@ -57,7 +56,8 @@ func main() {
 
 	// Create the state machine (mux) and set its message handlers.
 	mux := sm.New(settings)
-	mux.Handle("RIR", handleRIR(*silent))
+	mux.Handle("PLR", handlePLR(*silent))
+	mux.Handle("LRR", handleLRR(*silent))
 	mux.HandleFunc("ALL", handleALL) // Catch all.
 
 	// Print error reports.
@@ -83,8 +83,8 @@ func listen(addr, cert, key string, handler diam.Handler) error {
 	return diam.ListenAndServe(addr, handler, nil)
 }
 
-func handleRIR(silent bool) diam.HandlerFunc {
-	type RouteInfoRequest struct {
+func handlePLR(silent bool) diam.HandlerFunc {
+	type ProvideLocationRequest struct {
 		SessionID                   datatype.UTF8String       `avp:"Session-Id"`
 		VendorSpecificApplicationId datatype.Grouped          `avp:"Vendor-Specific-Application-Id"`
 		AuthSessionState            datatype.Enumerated       `avp:"Auth-Session-State"`
@@ -94,24 +94,28 @@ func handleRIR(silent bool) diam.HandlerFunc {
 		DestinationHost             datatype.DiameterIdentity `avp:"Destination-Host"`
 		UserName                    string                    `avp:"User-Name"`
 		MSISDN                      string                    `avp:"MSISDN"`
-		GMLCNumber                  string                    `avp:"GMLC-Number"`
+		SLgLocationType             datatype.Enumerated       `avp:"SLg-Location-Type"`
+		LCSEPSClientName            datatype.Grouped          `avp:"LCS-EPS-Client-Name"`
+		LCSClientType               datatype.Enumerated       `avp:"LCS-Client-Type"`
+		LCSRequestorName            datatype.Grouped          `avp:"LCS-Requestor-Name"`
+		LCSPriority                 datatype.Unsigned32       `avp:"LCS-Priority"`
 	}
 	return func(c diam.Conn, m *diam.Message) {
 		if !silent {
-			log.Printf("Received RIR from %s:\n%s", c.RemoteAddr(), m)
+			log.Printf("Received PLR from %s:\n%s", c.RemoteAddr(), m)
 		}
-		var hmr RouteInfoRequest
-		if err := m.Unmarshal(&hmr); err != nil {
+		var plr ProvideLocationRequest
+		if err := m.Unmarshal(&plr); err != nil {
 			log.Printf("Failed to parse message from %s: %s\n%s",
 				c.RemoteAddr(), err, m)
 			return
 		}
 		a := m.Answer(diam.Success)
-		a.NewAVP(avp.SessionID, avp.Mbit, 0, hmr.SessionID)
-		a.NewAVP(avp.OriginHost, avp.Mbit, 0, hmr.DestinationHost)
-		a.NewAVP(avp.OriginRealm, avp.Mbit, 0, hmr.DestinationRealm)
-		a.NewAVP(avp.DestinationRealm, avp.Mbit, 0, hmr.OriginRealm)
-		a.NewAVP(avp.DestinationHost, avp.Mbit, 0, hmr.OriginHost)
+		a.NewAVP(avp.SessionID, avp.Mbit, 0, plr.SessionID)
+		a.NewAVP(avp.OriginHost, avp.Mbit, 0, plr.DestinationHost)
+		a.NewAVP(avp.OriginRealm, avp.Mbit, 0, plr.DestinationRealm)
+		a.NewAVP(avp.DestinationRealm, avp.Mbit, 0, plr.OriginRealm)
+		a.NewAVP(avp.DestinationHost, avp.Mbit, 0, plr.OriginHost)
 		a.NewAVP(avp.VendorSpecificApplicationID, avp.Mbit, 0, &diam.GroupedAVP{
 			AVP: []*diam.AVP{
 				diam.NewAVP(avp.VendorID, avp.Mbit, 0, datatype.Unsigned32(10415)),
@@ -123,32 +127,69 @@ func handleRIR(silent bool) diam.HandlerFunc {
 				diam.NewAVP(avp.ExperimentalResultCode, avp.Mbit, 0, datatype.Unsigned32(0)),
 			},
 		})
-		a.NewAVP(avp.UserName, avp.Mbit, 0, datatype.UTF8String("server-username"))
-		a.NewAVP(avp.MSISDN, avp.Mbit, 10415, datatype.UTF8String(hmr.MSISDN))
-		a.NewAVP(avp.LMSI, avp.Mbit, 10415, datatype.UTF8String("5503490000001"))
-		a.NewAVP(avp.AdditionalServingNode, avp.Mbit, 10415, &diam.GroupedAVP{
+		a.NewAVP(avp.LocationEstimate, avp.Mbit, 10415, datatype.OctetString("0.1231,0.1234"))
+		a.NewAVP(avp.AccuracyFulfilmentIndicator, avp.Mbit, 10415, datatype.Enumerated(0))
+		a.NewAVP(avp.AgeOfLocationEstimate, avp.Mbit, 10415, datatype.Unsigned32(0))
+		a.NewAVP(avp.VelocityEstimate, avp.Mbit, 10415, datatype.OctetString("12345678"))
+		a.NewAVP(avp.ECGI, avp.Mbit, 10415, datatype.OctetString("ecgi-name"))
+
+		_, err := a.WriteTo(c)
+		if err != nil {
+			log.Printf("Failed to write message to %s: %s\n%s\n",
+				c.RemoteAddr(), err, a)
+			return
+		}
+		if !silent {
+			log.Printf("Sent RIA to %s:\n%s", c.RemoteAddr(), a)
+		}
+	}
+}
+
+func handleLRR(silent bool) diam.HandlerFunc {
+	type LocationReportRequest struct {
+		SessionID             datatype.UTF8String       `avp:"Session-Id"`
+		AuthSessionState      datatype.Enumerated       `avp:"Auth-Session-State"`
+		OriginHost            datatype.DiameterIdentity `avp:"Origin-Host"`
+		OriginRealm           datatype.DiameterIdentity `avp:"Origin-Realm"`
+		DestinationRealm      datatype.DiameterIdentity `avp:"Destination-Realm"`
+		DestinationHost       datatype.DiameterIdentity `avp:"Destination-Host"`
+		UserName              string                    `avp:"User-Name"`
+		MSISDN                string                    `avp:"MSISDN"`
+		IMEI                  string                    `avp:"IMEI"`
+		LocationEvent         datatype.Enumerated       `avp:"Location-Event"`
+		LocationEstimate      datatype.OctetString      `avp:"Location-Estimate"`
+		AgeOfLocationEstimate datatype.Unsigned32       `avp:"Age-Of-Location-Estimate"`
+		ECGI                  datatype.OctetString      `avp:"ECGI"`
+		ServingNode           datatype.Grouped          `avp:"Serving-Node"`
+	}
+	return func(c diam.Conn, m *diam.Message) {
+		if !silent {
+			log.Printf("Received LRR from %s:\n%s", c.RemoteAddr(), m)
+		}
+		var lrr LocationReportRequest
+		if err := m.Unmarshal(&lrr); err != nil {
+			log.Printf("Failed to parse message from %s: %s\n%s",
+				c.RemoteAddr(), err, m)
+			return
+		}
+		a := m.Answer(diam.Success)
+		a.NewAVP(avp.SessionID, avp.Mbit, 0, lrr.SessionID)
+		a.NewAVP(avp.OriginHost, avp.Mbit, 0, lrr.DestinationHost)
+		a.NewAVP(avp.OriginRealm, avp.Mbit, 0, lrr.DestinationRealm)
+		a.NewAVP(avp.DestinationRealm, avp.Mbit, 0, lrr.OriginRealm)
+		a.NewAVP(avp.DestinationHost, avp.Mbit, 0, lrr.OriginHost)
+		a.NewAVP(avp.VendorSpecificApplicationID, avp.Mbit, 0, &diam.GroupedAVP{
 			AVP: []*diam.AVP{
-				diam.NewAVP(avp.SGSNNumber, avp.Mbit, 10415, datatype.UTF8String("5503490000002")),
-				diam.NewAVP(avp.MMEName, avp.Mbit, 10415, datatype.DiameterIdentity("mme.org.br")),
-				diam.NewAVP(avp.MMERealm, avp.Mbit, 10415, datatype.DiameterIdentity("realm.mme.org.br")),
-				diam.NewAVP(avp.SGSNName, avp.Mbit, 10415, datatype.DiameterIdentity("sgsn.org.br")),
-				diam.NewAVP(avp.SGSNRealm, avp.Mbit, 10415, datatype.DiameterIdentity("realm.sgsn.org.br")),
-				diam.NewAVP(avp.MSCNumber, avp.Mbit, 10415, datatype.DiameterIdentity("55034000012345")),
-				diam.NewAVP(avp.LCSCapabilitiesSets, avp.Mbit, 10415, datatype.Unsigned32(0)),
+				diam.NewAVP(avp.VendorID, avp.Mbit, 0, datatype.Unsigned32(10415)),
 			},
 		})
-		a.NewAVP(avp.ServingNode, avp.Mbit, 10415, &diam.GroupedAVP{
+		a.NewAVP(avp.AuthSessionState, avp.Mbit, 0, datatype.Enumerated(0))
+		a.NewAVP(avp.ExperimentalResult, avp.Mbit, 0, &diam.GroupedAVP{
 			AVP: []*diam.AVP{
-				diam.NewAVP(avp.SGSNNumber, avp.Mbit, 10415, datatype.UTF8String("5503490000002")),
-				diam.NewAVP(avp.MMEName, avp.Mbit, 10415, datatype.DiameterIdentity("mme.org.br")),
-				diam.NewAVP(avp.MMERealm, avp.Mbit, 10415, datatype.DiameterIdentity("realm.mme.org.br")),
-				diam.NewAVP(avp.SGSNName, avp.Mbit, 10415, datatype.DiameterIdentity("sgsn.org.br")),
-				diam.NewAVP(avp.SGSNRealm, avp.Mbit, 10415, datatype.DiameterIdentity("realm.sgsn.org.br")),
-				diam.NewAVP(avp.MSCNumber, avp.Mbit, 10415, datatype.DiameterIdentity("55034000012345")),
-				diam.NewAVP(avp.LCSCapabilitiesSets, avp.Mbit, 10415, datatype.Unsigned32(0)),
+				diam.NewAVP(avp.ExperimentalResultCode, avp.Mbit, 0, datatype.Unsigned32(0)),
 			},
 		})
-		a.NewAVP(avp.PPRAddress, avp.Mbit, 10415, datatype.Address(net.ParseIP("127.0.0.1")))
+
 		_, err := a.WriteTo(c)
 		if err != nil {
 			log.Printf("Failed to write message to %s: %s\n%s\n",
