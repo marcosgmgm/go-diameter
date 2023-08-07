@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diameter>
+
+	<application id="16777291" type="auth" name="TGPP SLh">
+
+		<command code="8388622" short="RI" name="LCS-Routing-Info-Request">
+			<request>
+				<rule avp="Session-Id" required="true" max="1"/>
+				<rule avp="Vendor-Specific-Application-Id" required="true" max="1"/>
+				<rule avp="Auth-Session-State" required="true" max="1"/>
+				<rule avp="Origin-Host" required="true" max="1"/>
+				<rule avp="Origin-Realm" required="true" max="1"/>
+				<rule avp="Destination-Host" required="true" max="1"/>
+				<rule avp="Destination-Realm" required="true" max="1"/>
+				<rule avp="User-Name" required="true" max="1"/>
+				<rule avp="MSISDN" required="false" max="1"/>
+				<rule avp="GMLC-Number" required="false" max="1"/>
+				<rule avp="Supported-Features" required="false" max="1"/>
+				<rule avp="Proxy-Info" required="false" max="1"/>
+				<rule avp="Route-Record" required="false" max="1"/>
+			</request>
+			<answer>
+				<!-- http://tools.ietf.org/html/rfc4006#section-3.2 -->
+				<rule avp="Session-Id" required="true" max="1"/>
+				<rule avp="Vendor-Specific-Application-Id" required="true" max="1"/>
+				<rule avp="Result-Code" required="true" max="1"/>
+				<rule avp="Experimental-Result" required="true" max="1"/>
+				<rule avp="Auth-Session-State" required="true" max="1"/>
+				<rule avp="Origin-Host" required="true" max="1"/>
+				<rule avp="Origin-Realm" required="true" max="1"/>
+				<rule avp="Supported-Features" required="false" max="1"/>
+				<rule avp="User-Name" required="true" max="1"/>
+				<rule avp="MSISDN" required="false" max="1"/>
+				<rule avp="LMSI" required="false" max="1"/>
+				<rule avp="Serving-Node" required="false" max="1"/>
+				<rule avp="Additional-Serving-Node" required="false" max="1"/>
+				<rule avp="PPR-Address" required="false" max="1"/>
+				<rule avp="RIA-Flags" required="false" max="1"/>
+				<rule avp="Failed-AVP" required="false" max="1"/>
+				<rule avp="Proxy-Info" required="false" max="1"/>
+				<rule avp="Route-Record" required="false" max="1"/>
+				<rule avp="Destination-Host" required="true" max="1"/>
+				<rule avp="Destination-Realm" required="true" max="1"/>
+			</answer>
+		</command>
+
+		<avp name="LMSI" code="2400" must="V" must_not="M" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+
+		<avp name="Additional-Serving-Node" code="2406" must="V,M" may="-" must-not="-" may-encrypt="N" vendor-id="10415">
+			<data type="Grouped">
+				<rule avp="SGSN-Number" required="false" max="1"/>
+				<rule avp="SGSN-Name" required="false" max="1"/>
+				<rule avp="SGSN-Realm" required="false" max="1"/>
+				<rule avp="MME-Name" required="false" max="1"/>
+				<rule avp="MME-Realm" required="false" max="1"/>
+				<rule avp="MSC-Number" required="false" max="1"/>
+				<rule avp="TGPP-AAA-Server-Name" required="false" max="1"/>
+				<rule avp="LCS-Capabilities-Sets" required="false" max="1"/>
+				<rule avp="GMLC-Address" required="false" max="1"/>
+			</data>
+		</avp>
+
+		<avp name="PPR-Address" code="2407" must="V" must_not="M" may-encrypt="N" vendor-id="10415">
+			<data type="Address"/>
+		</avp>
+		<avp name="RIA-Flags" code="2411" must="V" must_not="M" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32"/>
+		</avp>
+
+
+	</application>
+</diameter>
