@@ -18,8 +18,10 @@ const (
 	DeviceWatchdog            = 280
 	DisconnectPeer            = 282
 	LCSRoutingInfoRequest     = 8388622
+	LocationReportRequest     = 8388621
 	MultimediaAuthentication  = 303
 	Notify                    = 323
+	ProvideLocationRequest    = 8388620
 	PurgeUE                   = 321
 	ReAuth                    = 258
 	RegistrationTermination   = 304
@@ -50,10 +52,14 @@ const (
 	DPR = "DPR"
 	DWA = "DWA"
 	DWR = "DWR"
+	LRA = "LRA"
+	LRR = "LRR"
 	MAA = "MAA"
 	MAR = "MAR"
 	NOA = "NOA"
 	NOR = "NOR"
+	PLA = "PLA"
+	PLR = "PLR"
 	PUA = "PUA"
 	PUR = "PUR"
 	RAA = "RAA"

@@ -144,6 +144,7 @@ func init() {
 		{"TGPP_Swx", tgppswxXML},
 		{"TGPP_Slh", tgppslhXML},
 		{"Diameter Sy", diametersyXML},
+		{"TGPP_Slg", tgppslgXML},
 	}
 	var err error
 	Default, err = NewParser()

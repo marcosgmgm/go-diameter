@@ -61,6 +61,7 @@ const (
 	AcctTunnelConnection                       = 68
 	AcctTunnelPacketsLost                      = 86
 	AccumulatedCost                            = 2052
+	AccuracyFulfilmentIndicator                = 2513
 	ActiveAPN                                  = 1612
 	Adaptations                                = 1217
 	AdditionalContentInformation               = 1207
@@ -70,6 +71,7 @@ const (
 	AddressDomain                              = 898
 	AddressType                                = 899
 	AddresseeType                              = 1208
+	AgeOfLocationEstimate                      = 2514
 	AllAPNConfigurationsIncludedIndicator      = 1428
 	AllocationRetentionPriority                = 1034
 	AlternateChargedPartyAddress               = 1280
@@ -198,7 +200,9 @@ const (
 	DomainName                                 = 1200
 	DynamicAddressFlag                         = 2051
 	DynamicAddressFlagExtension                = 2068
+	ECGI                                       = 2517
 	EPSSubscribedQoSProfile                    = 1431
+	EUTRANPositioningData                      = 2516
 	EUTRANVector                               = 1414
 	EarlyMediaDescription                      = 1272
 	Envelope                                   = 1266
@@ -289,6 +293,7 @@ const (
 	HFCNodeIdentifier                          = 579
 	HPLMNODB                                   = 1418
 	HomogeneousSupportofIMSVoiceOverPSSessions = 1493
+	HorizontalAccuracy                         = 2505
 	HostIPAddress                              = 257
 	ICSIndicator                               = 1491
 	IMEI                                       = 1402
@@ -332,14 +337,24 @@ const (
 	LCSClientID                                = 1232
 	LCSClientName                              = 1235
 	LCSClientType                              = 1241
+	LCSCodeword                                = 2511
 	LCSDataCodingScheme                        = 1236
+	LCSEPSClientName                           = 2501
 	LCSFormatIndicator                         = 1237
 	LCSInfo                                    = 1473
 	LCSInformation                             = 878
 	LCSNameString                              = 1238
+	LCSPriority                                = 2503
+	LCSPrivacyCheck                            = 2512
+	LCSPrivacyCheckNonSession                  = 2521
+	LCSPrivacyCheckSession                     = 2522
 	LCSPrivacyException                        = 1475
+	LCSQoS                                     = 2504
+	LCSQoSClass                                = 2523
 	LCSRequestorID                             = 1239
 	LCSRequestorIDString                       = 1240
+	LCSRequestorName                           = 2502
+	LCSServiceTypeID                           = 2520
 	LIPAPermission                             = 1618
 	LMSI                                       = 2400
 	LineType                                   = 581
@@ -350,6 +365,7 @@ const (
 	LocalSequenceNumber                        = 2063
 	LocationEstimate                           = 1242
 	LocationEstimateType                       = 1243
+	LocationEvent                              = 2518
 	LocationType                               = 1244
 	LoginIPHost                                = 14
 	LoginIPv6Host                              = 98
@@ -533,6 +549,7 @@ const (
 	ProxyHost                                  = 280
 	ProxyInfo                                  = 284
 	ProxyState                                 = 33
+	PseudonymIndicator                         = 2519
 	QoSClassIdentifier                         = 1028
 	QoSFilterRule                              = 407
 	QoSInformation                             = 1016
@@ -590,6 +607,7 @@ const (
 	RequiredAccessInfo                         = 536
 	RequiredMBMSBearerCapabilities             = 901
 	ReservationPriority                        = 458
+	ResponseTime                               = 2509
 	RestrictionFilterRule                      = 438
 	ResultCode                                 = 268
 	ResynchronizationInfo                      = 1411
@@ -631,6 +649,7 @@ const (
 	SIPResponseTimestampFraction               = 2302
 	SIPTOPermission                            = 1613
 	SLRequestType                              = 2904
+	SLgLocationType                            = 2500
 	SMDeviceTriggerIndicator                   = 3407
 	SMDeviceTriggerInformation                 = 3405
 	SMDischargeTime                            = 2012
@@ -704,6 +723,7 @@ const (
 	SubscriptionIDType                         = 450
 	SupplementaryService                       = 2048
 	SupportedFeatures                          = 628
+	SupportedGADShapes                         = 2510
 	SupportedVendorID                          = 265
 	TADIdentifier                              = 2717
 	TCPSourcePort                              = 2843
@@ -813,8 +833,12 @@ const (
 	VPLMNLIPAAllowed                           = 1617
 	ValidityTime                               = 448
 	ValueDigits                                = 447
+	VelocityEstimate                           = 2515
+	VelocityRequested                          = 2508
 	VendorID                                   = 266
 	VendorSpecificApplicationID                = 260
+	VerticalAccuracy                           = 2506
+	VerticalRequested                          = 2507
 	VisitedNetworkIdentifier                   = 600
 	VisitedPLMNID                              = 1407
 	VolumeQuotaThreshold                       = 869

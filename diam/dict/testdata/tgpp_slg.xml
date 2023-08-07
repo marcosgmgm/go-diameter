@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diameter>
+
+	<application id="16777255" type="auth" name="TGPP SLg">
+
+		<command code="8388620" short="PL" name="Provide-Location-Request">
+			<request>
+				<rule avp="Session-Id" required="true" max="1"/>
+				<rule avp="Vendor-Specific-Application-Id" required="true" max="1"/>
+				<rule avp="Auth-Session-State" required="true" max="1"/>
+				<rule avp="Origin-Host" required="true" max="1"/>
+				<rule avp="Origin-Realm" required="true" max="1"/>
+				<rule avp="Destination-Host" required="true" max="1"/>
+				<rule avp="Destination-Realm" required="true" max="1"/>
+				<rule avp="SLg-Location-Type" required="true" max="1"/>
+				<rule avp="User-Name" required="true" max="1"/>
+				<rule avp="MSISDN" required="false" max="1"/>
+				<rule avp="IMEI" required="false" max="1"/>
+				<rule avp="LCS-EPS-Client-Name" required="false" max="1"/>
+				<rule avp="LCS-Client-Type" required="false" max="1"/>
+				<rule avp="LCS-Requestor-Name" required="false" max="1"/>
+				<rule avp="LCS-Priority" required="false" max="1"/>
+				<rule avp="LCS-QoS" required="false" max="1"/>
+				<rule avp="Velocity-Requested" required="false" max="1"/>
+				<rule avp="LCS-Supported-GAD-Shapes" required="false" max="1"/>
+				<rule avp="LCS-Service-Type-ID" required="false" max="1"/>
+				<rule avp="LCS-Codeword" required="false" max="1"/>
+				<rule avp="LCS-Privacy-Check-Non-Session" required="false" max="1"/>
+				<rule avp="LCS-Privacy-Check-Session" required="false" max="1"/>
+				<rule avp="Service-Selection" required="false" max="1"/>
+				<rule avp="Deferred-Location-Type" required="false" max="1"/>
+				<rule avp="PLR-Flags" required="false" max="1"/>
+				<rule avp="Supported-Features" required="false" max="1"/>
+				<rule avp="Proxy-Info" required="false" max="1"/>
+				<rule avp="Route-Record" required="false" max="1"/>
+
+			</request>
+			<answer>
+				<!-- http://tools.ietf.org/html/rfc4006#section-3.2 -->
+				<rule avp="Session-Id" required="true" max="1"/>
+				<rule avp="Vendor-Specific-Application-Id" required="true" max="1"/>
+				<rule avp="Result-Code" required="true" max="1"/>
+				<rule avp="Experimental-Result" required="true" max="1"/>
+				<rule avp="Auth-Session-State" required="true" max="1"/>
+				<rule avp="Origin-Host" required="true" max="1"/>
+				<rule avp="Origin-Realm" required="true" max="1"/>
+				<rule avp="Destination-Host" required="false" max="1"/>
+				<rule avp="Destination-Realm" required="false" max="1"/>
+				<rule avp="Location-Estimate" required="false" max="1"/>
+				<rule avp="Accuracy-Fulfilment-Indicator" required="false" max="1"/>
+				<rule avp="Age-Of-Location-Estimate" required="false" max="1"/>
+				<rule avp="Velocity-Estimate" required="false" max="1"/>
+				<rule avp="EUTRAN-Positioning-Data" required="false" max="1"/>
+				<rule avp="ECGI" required="false" max="1"/>
+				<rule avp="GERAN-Positioning-Info" required="false" max="1"/>
+				<rule avp="Cell-Global-Identity" required="false" max="1"/>
+				<rule avp="UTRAN-Positioning-Info" required="false" max="1"/>
+				<rule avp="Service-Area-Identity" required="false" max="1"/>
+				<rule avp="Serving-Node" required="false" max="1"/>
+				<rule avp="PLA-Flags" required="false" max="1"/>
+				<rule avp="ESMLC-Cell-Info" required="false" max="1"/>
+				<rule avp="Civic-Address" required="false" max="1"/>
+				<rule avp="Barometric-Pressure" required="false" max="1"/>
+				<rule avp="Supported-Features" required="false" max="1"/>
+				<rule avp="Failed-AVP" required="false" max="1"/>
+				<rule avp="Proxy-Info" required="false" max="1"/>
+				<rule avp="Route-Record" required="false" max="1"/>
+			</answer>
+		</command>
+		<command code="8388621" short="LR" name="Location-Report-Request">
+			<request>
+				<rule avp="Session-Id" required="true" max="1"/>
+				<rule avp="Vendor-Specific-Application-Id" required="true" max="1"/>
+				<rule avp="Auth-Session-State" required="true" max="1"/>
+				<rule avp="Origin-Host" required="true" max="1"/>
+				<rule avp="Origin-Realm" required="true" max="1"/>
+				<rule avp="Destination-Host" required="true" max="1"/>
+				<rule avp="Destination-Realm" required="true" max="1"/>
+				<rule avp="Location-Event" required="true" max="1"/>
+				<rule avp="LCS-EPS-Client-Name" required="false" max="1"/>
+				<rule avp="User-Name" required="false" max="1"/>
+				<rule avp="MSISDN" required="false" max="1"/>
+				<rule avp="IMEI" required="false" max="1"/>
+				<rule avp="Location-Estimate" required="false" max="1"/>
+				<rule avp="Accuracy-Fulfilment-Indicator" required="false" max="1"/>
+				<rule avp="Age-Of-Location-Estimate" required="false" max="1"/>
+				<rule avp="Velocity-Estimate" required="false" max="1"/>
+				<rule avp="EUTRAN-Positioning-Data" required="false" max="1"/>
+				<rule avp="ECGI" required="false" max="1"/>
+				<rule avp="GERAN-Positioning-Info" required="false" max="1"/>
+				<rule avp="Cell-Global-Identity" required="false" max="1"/>
+				<rule avp="UTRAN-Positioning-Info" required="false" max="1"/>
+				<rule avp="Service-Area-Identity" required="false" max="1"/>
+				<rule avp="LCS-Service-Type-ID" required="false" max="1"/>
+				<rule avp="Pseudonym-Indicator" required="false" max="1"/>
+				<rule avp="LCS-QoS-Class" required="false" max="1"/>
+				<rule avp="Serving-Node" required="false" max="1"/>
+				<rule avp="LRR-Flags" required="false" max="1"/>
+				<rule avp="LCS-Reference-Number" required="false" max="1"/>
+				<rule avp="Deferred-MT-LR-Data" required="false" max="1"/>
+				<rule avp="GMLC-Address" required="false" max="1"/>
+				<rule avp="Reporting-Amount" required="false" max="1"/>
+				<rule avp="Periodic-LDR-Information" required="false" max="1"/>
+				<rule avp="ESMLC-Cell-Info" required="false" max="1"/>
+				<rule avp="1xRTT-RCID" required="false" max="1"/>
+				<rule avp="Delayed-Location-Reporting-Data" required="false" max="1"/>
+				<rule avp="Civic-Address" required="false" max="1"/>
+				<rule avp="Barometric-Pressure" required="false" max="1"/>
+				<rule avp="Supported-Features" required="false" max="1"/>
+				<rule avp="Proxy-Info" required="false" max="1"/>
+				<rule avp="Route-Record" required="false" max="1"/>
+			</request>
+			<answer>
+				<!-- http://tools.ietf.org/html/rfc4006#section-3.2 -->
+				<rule avp="Session-Id" required="true" max="1"/>
+				<rule avp="Vendor-Specific-Application-Id" required="true" max="1"/>
+				<rule avp="Result-Code" required="true" max="1"/>
+				<rule avp="Experimental-Result" required="true" max="1"/>
+				<rule avp="Auth-Session-State" required="true" max="1"/>
+				<rule avp="Origin-Host" required="true" max="1"/>
+				<rule avp="Origin-Realm" required="true" max="1"/>
+				<rule avp="Destination-Host" required="true" max="1"/>
+				<rule avp="Destination-Realm" required="true" max="1"/>
+				<rule avp="GMLC-Address" required="false" max="1"/>
+				<rule avp="LRA-Flags" required="true" max="1"/>
+				<rule avp="Reporting-PLMN-List" required="false" max="1"/>
+				<rule avp="LCS-Reference-Number" required="false" max="1"/>
+				<rule avp="Supported-Features" required="false" max="1"/>
+				<rule avp="Failed-AVP" required="false" max="1"/>
+				<rule avp="Proxy-Info" required="false" max="1"/>
+				<rule avp="Route-Record" required="false" max="1"/>
+
+			</answer>
+		</command>
+
+		<avp name="SLg-Location-Type" code="2500" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Enumerated">
+				<item code="0" name="CURRENT_LOCATION"/>
+				<item code="1" name="CURRENT_OR_LAST_KNOWN_LOCATION"/>
+				<item code="2" name="INITIAL_LOCATION"/>
+				<item code="3" name="RESERVED"/>
+				<item code="4" name="RESERVED"/>
+				<item code="5" name="NOTIFICATION_VERIFICATION_ONLY"/>
+			</data>
+		</avp>
+
+		<avp name="MSISDN" code="701" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+		<avp name="IMEI" code="1402" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="UTF8String" />
+		</avp>
+
+		<avp name="LCS-EPS-Client-Name" code="2501" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Grouped">
+				<rule avp="LCS-Name-String" required="false" max="1"/>
+				<rule avp="LCS-Format-Indicator" required="false" max="1"/>
+			</data>
+		</avp>
+		<avp name="LCS-Name-String" code="1238" must="M,V" may="P" may-encrypt="N" vendor-id="10415">
+			<data type="UTF8String" />
+		</avp>
+		<avp name="LCS-Format-Indicator" code="1237" must="M,V" may="P" may-encrypt="N" vendor-id="10415">
+			<data type="Enumerated">
+				<item code="0" name="LOGICAL_NAME"/>
+				<item code="1" name="EMAIL_ADDRESS"/>
+				<item code="2" name="MSISDN"/>
+				<item code="3" name="URL"/>
+				<item code="4" name="SIP_URL"/>
+			</data>
+		</avp>
+		<avp name="LCS-Client-Type" code="1241" must="M,V" may="P" may-encrypt="N" vendor-id="10415">
+			<data type="Enumerated">
+				<item code="0" name="EMERGENCY_SERVICES"/>
+				<item code="1" name="VALUE_ADDED_SERVICES"/>
+				<item code="2" name="PLMN_OPERATOR_SERVICES"/>
+				<item code="3" name="LAWFUL_INTERCEPT_SERVICES"/>
+			</data>
+		</avp>
+
+		<avp name="LCS-Requestor-Name" code="2502" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Grouped">
+				<rule avp="LCS-Requestor-Id-String" required="false" max="1"/>
+				<rule avp="LCS-Format-Indicator" required="false" max="1"/>
+			</data>
+		</avp>
+		<avp name="LCS-Requestor-Id-String" code="1240" must="M,V" may="P" may-encrypt="N" vendor-id="10415">
+			<data type="UTF8String" />
+		</avp>
+		<avp name="LCS-Priority" code="2503" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32" />
+		</avp>
+
+		<avp name="LCS-QoS" code="2504" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Grouped">
+				<rule avp="LCS-QoS-Class" required="false" max="1"/>
+				<rule avp="Horizontal-Accuracy" required="false" max="1"/>
+				<rule avp="Vertical-Accuracy" required="false" max="1"/>
+				<rule avp="Vertical-Requested" required="false" max="1"/>
+				<rule avp="Response-Time" required="false" max="1"/>
+			</data>
+		</avp>
+		<avp name="LCS-QoS-Class" code="2523" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Enumerated">
+				<item code="0" name="ASSURED"/>
+				<item code="1" name="BEST_EFFORT"/>
+			</data>
+		</avp>
+		<avp name="Horizontal-Accuracy" code="2505" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32" />
+		</avp>
+		<avp name="Vertical-Accuracy" code="2506" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32" />
+		</avp>
+		<avp name="Vertical-Requested" code="2507" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Enumerated">
+				<item code="0" name="VERTICAL_COORDINATE_IS_NOT_REQUESTED"/>
+				<item code="1" name="VERTICAL_COORDINATE_IS_REQUESTED"/>
+			</data>
+		</avp>
+		<avp name="Response-Time" code="2509" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Enumerated">
+				<item code="0" name="LOW_DELAY"/>
+				<item code="1" name="DELAY_TOLERANT"/>
+			</data>
+		</avp>
+
+		<avp name="Velocity-Requested" code="2508" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Enumerated">
+				<item code="0" name="VELOCITY_IS_NOT_REQUESTED"/>
+				<item code="1" name="VELOCITY_IS_REQUESTED"/>
+			</data>
+		</avp>
+		<avp name="Supported-GAD-Shapes" code="2510" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32" />
+		</avp>
+		<avp name="LCS-Service-Type-ID" code="2520" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32" />
+		</avp>
+		<avp name="LCS-Codeword" code="2511" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="UTF8String" />
+		</avp>
+
+		<avp name="LCS-Privacy-Check-Non-Session" code="2521" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Grouped">
+				<rule avp="LCS-Privacy-Check" required="false" max="1"/>
+			</data>
+		</avp>
+		<avp name="LCS-Privacy-Check" code="2512" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Enumerated">
+				<item code="0" name="ALLOWED_WITHOUT_NOTIFICATION"/>
+				<item code="1" name="ALLOWED_WITH_NOTIFICATION"/>
+				<item code="2" name="ALLOWED_IF_NO_RESPONSE"/>
+				<item code="3" name="RESTRICTED_IF_NO_RESPONSE"/>
+				<item code="4" name="NOT_ALLOWED"/>
+			</data>
+		</avp>
+
+		<avp name="LCS-Privacy-Check-Session" code="2522" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Grouped">
+				<rule avp="LCS-Privacy-Check" required="false" max="1"/>
+			</data>
+		</avp>
+
+		<avp name="Service-Selection" code="493" must="M" may="P" must-not="V" may-encrypt="Y" vendor-id="0">
+			<data type="UTF8String"/>
+		</avp>
+
+		<avp name="Location-Estimate" code="1242" must="M,V" may="P" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+		<avp name="Accuracy-Fulfilment-Indicator" code="2513" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Enumerated">
+				<item code="0" name="REQUESTED_ACCURACY_FULFILLED"/>
+				<item code="1" name="REQUESTED_ACCURACY_NOT_FULFILLED"/>
+			</data>
+		</avp>
+		<avp name="Age-Of-Location-Estimate" code="2514" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32" />
+		</avp>
+		<avp name="Velocity-Estimate" code="2515" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+		<avp name="EUTRAN-Positioning-Data" code="2516" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+		<avp name="ECGI" code="2517" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+
+		<avp name="Location-Event" code="2518" must="M" may-encrypt="N" vendor-id="10415">
+			<data type="Enumerated">
+				<item code="0" name="EMERGENCY_CALL_ORIGINATION"/>
+				<item code="1" name="EMERGENCY_CALL_RELEASE"/>
+				<item code="2" name="MO_LR"/>
+				<item code="3" name="EMERGENCY_CALL_HANDOVER"/>
+				<item code="4" name="DEFERRED_MT_LR_RESPONSE"/>
+				<item code="5" name="DEFERRED_MO_LR_TTTP_INITIATION"/>
+				<item code="6" name="DELAYED_LOCATION_REPORTING"/>
+			</data>
+		</avp>
+
+		<avp name="Pseudonym-Indicator" code="2519" must="M" may-encrypt="N" vendor-id="10415">
+			<data type="Enumerated">
+				<item code="0" name="PSEUDONYM_NOT_REQUESTED"/>
+				<item code="1" name="PSEUDONYM_REQUESTED"/>
+			</data>
+		</avp>
+
+		<avp name="Serving-Node" code="2401" must="V,M" may="-" must-not="-" may-encrypt="N" vendor-id="10415">
+			<data type="Grouped">
+				<rule avp="SGSN-Number" required="false" max="1"/>
+				<rule avp="SGSN-Name" required="false" max="1"/>
+				<rule avp="SGSN-Realm" required="false" max="1"/>
+				<rule avp="MME-Name" required="false" max="1"/>
+				<rule avp="MME-Realm" required="false" max="1"/>
+				<rule avp="MSC-Number" required="false" max="1"/>
+				<rule avp="TGPP-AAA-Server-Name" required="false" max="1"/>
+				<rule avp="LCS-Capabilities-Sets" required="false" max="1"/>
+				<rule avp="GMLC-Address" required="false" max="1"/>
+				<rule avp="AVP" required="false"/>
+			</data>
+		</avp>
+
+	</application>
+</diameter>
