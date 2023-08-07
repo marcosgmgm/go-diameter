@@ -9,9 +9,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/fiorix/go-diameter/v4/diam/avp"
-	"github.com/fiorix/go-diameter/v4/diam/datatype"
-	"github.com/fiorix/go-diameter/v4/diam/dict"
+	"github.com/marcosgmgm/go-diameter/v4/diam/avp"
+	"github.com/marcosgmgm/go-diameter/v4/diam/datatype"
+	"github.com/marcosgmgm/go-diameter/v4/diam/dict"
 )
 
 // AVP is a Diameter attribute-value-pair.

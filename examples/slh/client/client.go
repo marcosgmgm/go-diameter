@@ -8,18 +8,18 @@ package main
 import (
 	"errors"
 	"flag"
-	"github.com/fiorix/go-diameter/v4/diam/sm/smpeer"
 	"github.com/google/uuid"
+	"github.com/marcosgmgm/go-diameter/v4/diam/sm/smpeer"
 	"log"
 	"math/rand"
 	"net"
 	"time"
 
-	"github.com/fiorix/go-diameter/v4/diam"
-	"github.com/fiorix/go-diameter/v4/diam/avp"
-	"github.com/fiorix/go-diameter/v4/diam/datatype"
-	"github.com/fiorix/go-diameter/v4/diam/dict"
-	"github.com/fiorix/go-diameter/v4/diam/sm"
+	"github.com/marcosgmgm/go-diameter/v4/diam"
+	"github.com/marcosgmgm/go-diameter/v4/diam/avp"
+	"github.com/marcosgmgm/go-diameter/v4/diam/datatype"
+	"github.com/marcosgmgm/go-diameter/v4/diam/dict"
+	"github.com/marcosgmgm/go-diameter/v4/diam/sm"
 )
 
 func init() {

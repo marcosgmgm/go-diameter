@@ -40,12 +40,12 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/fiorix/go-diameter/v4/diam"
-	"github.com/fiorix/go-diameter/v4/diam/avp"
-	"github.com/fiorix/go-diameter/v4/diam/datatype"
-	"github.com/fiorix/go-diameter/v4/diam/dict"
-	"github.com/fiorix/go-diameter/v4/diam/sm"
-	"github.com/fiorix/go-diameter/v4/diam/sm/smpeer"
+	"github.com/marcosgmgm/go-diameter/v4/diam"
+	"github.com/marcosgmgm/go-diameter/v4/diam/avp"
+	"github.com/marcosgmgm/go-diameter/v4/diam/datatype"
+	"github.com/marcosgmgm/go-diameter/v4/diam/dict"
+	"github.com/marcosgmgm/go-diameter/v4/diam/sm"
+	"github.com/marcosgmgm/go-diameter/v4/diam/sm/smpeer"
 )
 
 func init() {
