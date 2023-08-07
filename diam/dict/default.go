@@ -7302,11 +7302,50 @@ var tgppslhXML = `<?xml version="1.0" encoding="UTF-8"?>
 			</data>
 		</avp>
 
-		<avp name="PPR-Address" code="2407" must="V" must_not="M" may-encrypt="N" vendor-id="10415">
+		<avp name="SGSN-Number" code="1489" must="V,M" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+		<avp name="MME-Name" code="2402" must="V,M"	may="-" must-not="-" may-encrypt="N" vendor-id="10415">
+			<data type="DiameterIdentity"/>
+		</avp>
+		<avp name="MME-Realm" code="2408" must="V"	may="-" must-not="M" may-encrypt="N" vendor-id="10415">
+			<data type="DiameterIdentity"/>
+		</avp>
+
+		<avp name="Experimental-Result" code="297" must="M" may="P" must-not="V" may-encrypt="N" vendor-id="10415">
+			<data type="Grouped">
+				<rule avp="Experimental-Result-Code" required="true" max="1"/>
+			</data>
+		</avp>
+
+		<avp name="Experimental-Result-Code" code="298" must="M" may="P" must-not="V" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32"/>
+		</avp>
+
+		<avp name="LCS-Capabilities-Sets" code="2404" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32"/>
+		</avp>
+		<avp name="MSC-Number" code="2403" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+		<avp name="SGSN-Name" code="2409" must="V" must-not="M" may-encrypt="N" vendor-id="10415">
+			<data type="DiameterIdentity"/>
+		</avp>
+		<avp name="SGSN-Realm" code="2410" must="V" must-not="M" may-encrypt="N" vendor-id="10415">
+			<data type="DiameterIdentity"/>
+		</avp>
+
+		<avp name="PPR-Address" code="2407" must="M,V" may-encrypt="N" vendor-id="10415">
 			<data type="Address"/>
 		</avp>
 		<avp name="RIA-Flags" code="2411" must="V" must_not="M" may-encrypt="N" vendor-id="10415">
 			<data type="Unsigned32"/>
+		</avp>
+		<avp name="GMLC-Number" code="1474" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+		<avp name="MSISDN" code="701" must="V,M"	may="-" must-not="-" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
 		</avp>
 
 

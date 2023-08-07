@@ -326,6 +326,7 @@ const (
 	KASME                                      = 1450
 	Kc                                         = 1453
 	LCSAPN                                     = 1231
+	LCSCapabilitiesSets                        = 2404
 	LCSClientDialedByMS                        = 1233
 	LCSClientExternalID                        = 1234
 	LCSClientID                                = 1232
@@ -391,6 +392,7 @@ const (
 	MPSIdentifier                              = 528
 	MPSPriority                                = 1616
 	MSCAddress                                 = 3417
+	MSCNumber                                  = 2403
 	MSISDN                                     = 701
 	MTCIWFAddress                              = 3406
 	MandatoryCapability                        = 604
@@ -610,7 +612,9 @@ const (
 	SDPTimeStamps                              = 1273
 	SDPType                                    = 2036
 	SGSNAddress                                = 1228
+	SGSNName                                   = 2409
 	SGSNNumber                                 = 1489
+	SGSNRealm                                  = 2410
 	SGWAddress                                 = 2067
 	SGWChange                                  = 2065
 	SIPAuthDataItem                            = 612
