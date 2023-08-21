@@ -102,6 +102,7 @@ const (
 	AuthorizationLifetime                      = 291
 	AuxApplicInfo                              = 1219
 	BSSID                                      = 2716
+	BarometricPressure                         = 2557
 	BaseTimeInterval                           = 1265
 	BasicServiceCode                           = 3411
 	BearerCapability                           = 3412
@@ -146,6 +147,8 @@ const (
 	CancellationType                           = 1420
 	CarrierSelectRoutingInformation            = 2023
 	CauseCode                                  = 861
+	CellGlobalIdentity                         = 1604
+	CellPortionID                              = 2553
 	ChangeCondition                            = 2037
 	ChangeTime                                 = 2038
 	ChargeReasonCode                           = 2118
@@ -157,6 +160,7 @@ const (
 	ChargingRuleName                           = 1005
 	ChargingRuleRemove                         = 1002
 	CheckBalanceResult                         = 422
+	CivicAddress                               = 2556
 	Class                                      = 25
 	ClassIdentifier                            = 1214
 	ClientAddress                              = 2018
@@ -202,6 +206,7 @@ const (
 	DynamicAddressFlagExtension                = 2068
 	ECGI                                       = 2517
 	EPSSubscribedQoSProfile                    = 1431
+	ESMLCCellInfo                              = 2552
 	EUTRANPositioningData                      = 2516
 	EUTRANVector                               = 1414
 	EarlyMediaDescription                      = 1272
@@ -278,6 +283,9 @@ const (
 	FramedRouting                              = 10
 	FromAddress                                = 2708
 	GCSIdentifier                              = 538
+	GERANGANSSPositioningData                  = 2526
+	GERANPositioningData                       = 2525
+	GERANPositioningInfo                       = 2524
 	GERANVector                                = 1416
 	GGSNAddress                                = 847
 	GLIIdentifier                              = 580
@@ -502,6 +510,7 @@ const (
 	PDPContext                                 = 1469
 	PDPContextType                             = 1247
 	PDPType                                    = 1470
+	PLAFlags                                   = 2546
 	PLMNClient                                 = 1482
 	PPRAddress                                 = 2407
 	PSAppendFreeFormatData                     = 867
@@ -674,6 +683,7 @@ const (
 	ServerAssignmentType                       = 614
 	ServerCapabilities                         = 603
 	ServerName                                 = 602
+	ServiceAreaIdentity                        = 1607
 	ServiceAuthorizationInfo                   = 548
 	ServiceContextID                           = 461
 	ServiceDataContainer                       = 2040
@@ -805,6 +815,10 @@ const (
 	UESRVCCCapability                          = 1615
 	ULAFlags                                   = 1406
 	ULRFlags                                   = 1405
+	UTRANAdditionalPositioningData             = 2558
+	UTRANGANSSPositioningData                  = 2529
+	UTRANPositioningData                       = 2528
+	UTRANPositioningInfo                       = 2527
 	UTRANVector                                = 1415
 	UnitCost                                   = 2061
 	UnitQuotaThreshold                         = 1226

@@ -300,6 +300,68 @@
 			</data>
 		</avp>
 
+		<avp name="GERAN-Positioning-Info" code="2524" must="M" may-encrypt="N" vendor-id="10415">
+			<data type="Grouped">
+				<rule avp="GERAN-Positioning-Data" required="false" max="1"/>
+				<rule avp="GERAN-GANSS-Positioning-Data" required="false" max="1"/>
+			</data>
+		</avp>
+		<avp name="GERAN-Positioning-Data" code="2525" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+		<avp name="GERAN-GANSS-Positioning-Data" code="2526" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+
+		<avp name="Cell-Global-Identity" code="1604" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+
+		<avp name="UTRAN-Positioning-Info" code="2527" must="M" may-encrypt="N" vendor-id="10415">
+			<data type="Grouped">
+				<rule avp="UTRAN-Positioning-Data" required="false" max="1"/>
+				<rule avp="UTRAN-GANSS-Positioning-Data" required="false" max="1"/>
+				<rule avp="UTRAN-Additional-Positioning-Data" required="false" max="1"/>
+			</data>
+		</avp>
+		<avp name="UTRAN-Positioning-Data" code="2528" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+		<avp name="UTRAN-GANSS-Positioning-Data" code="2529" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+		<avp name="UTRAN-Additional-Positioning-Data" code="2558" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+
+		<avp name="PLA-Flags" code="2546" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32"/>
+		</avp>
+
+
+		<avp name="Service-Area-Identity" code="1607" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
+
+		<avp name="ESMLC-Cell-Info" code="2552" must="M" may-encrypt="N" vendor-id="10415">
+			<data type="Grouped">
+				<rule avp="ECGI" required="false" max="1"/>
+				<rule avp="Cell-Portion-ID" required="false" max="1"/>
+			</data>
+		</avp>
+		<avp name="Cell-Portion-ID" code="2553" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32"/>
+		</avp>
+
+		<avp name="Civic-Address" code="2556" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="UTF8String"/>
+		</avp>
+
+		<avp name="Barometric-Pressure" code="2557" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32"/>
+		</avp>
+
+
 		<avp name="Pseudonym-Indicator" code="2519" must="M" may-encrypt="N" vendor-id="10415">
 			<data type="Enumerated">
 				<item code="0" name="PSEUDONYM_NOT_REQUESTED"/>
