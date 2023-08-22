@@ -190,6 +190,9 @@ const (
 	DataCodingScheme                           = 2001
 	DefaultEPSBearerQoS                        = 1049
 	DeferredLocationEventType                  = 1230
+	DeferredLocationType                       = 2532
+	DeferredMTLRData                           = 2547
+	DelayedLocationReportingData               = 2555
 	DeliveryReportRequested                    = 1216
 	DeliveryStatus                             = 2104
 	DeregistrationReason                       = 615
@@ -359,12 +362,14 @@ const (
 	LCSPrivacyException                        = 1475
 	LCSQoS                                     = 2504
 	LCSQoSClass                                = 2523
+	LCSReferenceNumber                         = 2531
 	LCSRequestorID                             = 1239
 	LCSRequestorIDString                       = 1240
 	LCSRequestorName                           = 2502
 	LCSServiceTypeID                           = 2520
 	LIPAPermission                             = 1618
 	LMSI                                       = 2400
+	LRRFlags                                   = 2530
 	LineType                                   = 581
 	Load                                       = 650
 	LoadType                                   = 651
@@ -502,6 +507,7 @@ const (
 	OriginatorSCCPAddress                      = 2008
 	OutgoingSessionID                          = 2320
 	OutgoingTrunkGroupID                       = 853
+	OxRTTRCID                                  = 2554
 	PDNConnectionChargingID                    = 2050
 	PDNGWAllocationType                        = 1438
 	PDNType                                    = 1456
@@ -607,6 +613,7 @@ const (
 	ReplyApplicID                              = 1223
 	ReplyMessage                               = 18
 	ReplyPathRequested                         = 2011
+	ReportingAmount                            = 2541
 	ReportingReason                            = 872
 	RequestedAction                            = 436
 	RequestedEUTRANAuthenticationInfo          = 1408

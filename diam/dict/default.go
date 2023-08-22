@@ -7343,7 +7343,7 @@ var tgppslgXML = `<?xml version="1.0" encoding="UTF-8"?>
 				<rule avp="Reporting-Amount" required="false" max="1"/>
 				<rule avp="Periodic-LDR-Information" required="false" max="1"/>
 				<rule avp="ESMLC-Cell-Info" required="false" max="1"/>
-				<rule avp="1xRTT-RCID" required="false" max="1"/>
+				<rule avp="OxRTT-RCID" required="false" max="1"/>
 				<rule avp="Delayed-Location-Reporting-Data" required="false" max="1"/>
 				<rule avp="Civic-Address" required="false" max="1"/>
 				<rule avp="Barometric-Pressure" required="false" max="1"/>
@@ -7602,12 +7602,45 @@ var tgppslgXML = `<?xml version="1.0" encoding="UTF-8"?>
 			<data type="Unsigned32"/>
 		</avp>
 
+		<avp name="LRR-Flags" code="2530" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32"/>
+		</avp>
+
+		<avp name="LCS-Reference-Number" code="2531" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
+		</avp>
 
 		<avp name="Pseudonym-Indicator" code="2519" must="M" may-encrypt="N" vendor-id="10415">
 			<data type="Enumerated">
 				<item code="0" name="PSEUDONYM_NOT_REQUESTED"/>
 				<item code="1" name="PSEUDONYM_REQUESTED"/>
 			</data>
+		</avp>
+
+
+		<avp name="Delayed-Location-Reporting-Data" code="2555" must="M" may-encrypt="N" vendor-id="10415">
+			<data type="Grouped">
+				<rule avp="Termination-Cause" required="false" max="1"/>
+				<rule avp="Serving-Node" required="false" max="1"/>
+			</data>
+		</avp>
+		<avp name="Deferred-MT-LR-Data" code="2547" must="M" may-encrypt="N" vendor-id="10415">
+			<data type="Grouped">
+				<rule avp="Deferred-Location-Type" required="false" max="1"/>
+				<rule avp="Termination-Cause" required="false" max="1"/>
+				<rule avp="Serving-Node" required="false" max="1"/>
+			</data>
+		</avp>
+		<avp name="Deferred-Location-Type" code="2532" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32"/>
+		</avp>
+
+		<avp name="Reporting-Amount" code="2541" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="Unsigned32"/>
+		</avp>
+
+		<avp name="OxRTT-RCID" code="2554" must="M,V" may-encrypt="N" vendor-id="10415">
+			<data type="OctetString"/>
 		</avp>
 
 		<avp name="Serving-Node" code="2401" must="V,M" may="-" must-not="-" may-encrypt="N" vendor-id="10415">

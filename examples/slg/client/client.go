@@ -94,7 +94,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = sendPLR(conn, cfg)
+	/*err = sendPLR(conn, cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -102,7 +102,7 @@ func main() {
 	case <-done:
 	case <-time.After(10 * time.Second):
 		log.Fatal("Provide-Location-Request timeout")
-	}
+	}*/
 
 	err = sendLRR(conn, cfg)
 	if err != nil {
