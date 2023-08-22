@@ -7658,6 +7658,10 @@ var tgppslgXML = `<?xml version="1.0" encoding="UTF-8"?>
 			</data>
 		</avp>
 
+		<avp name="GMLC-Address" code="2405" must="V,M" may-encrypt="N" vendor-id="10415">
+			<data type="Address"/>
+		</avp>
+
 	</application>
 </diameter>`
 
